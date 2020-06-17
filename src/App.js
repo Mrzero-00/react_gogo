@@ -1,12 +1,13 @@
 import React from 'react';
-import Inputer from './Input';
+import Userlist from './Userlist';
 
 
 function App() {
   return (
     <div>
-      <Inputer />
+      <Userlist />
     </div>
+
   );
 }
 
