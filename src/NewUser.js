@@ -1,13 +1,13 @@
 import React from 'react';
 
-function CreateUser({name,email,onChange,onClick}){
+function CreateUser({username,email,onChange,onClick}){
     return(
         <div>
             <input 
             placeholder="이름"
-            value={name}
+            value={username}
             onChange={onChange}
-            name="name"
+            name="username"
             />
             <input 
             placeholder="이메일"

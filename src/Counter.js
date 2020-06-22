@@ -14,7 +14,7 @@ function reducer(state,action){
 }
 
 
-function Counrter(){
+function Counter(){
     const [num, setnum] = useState(0);
     const [number, dispath] = useReducer(reducer,0);
 
@@ -50,4 +50,4 @@ function Counrter(){
     );
 }
 
-export default Counrter;
+export default Counter;

@@ -11,14 +11,14 @@ const UserLoad = React.memo(function UserLoad({user, onRemove, onTrue}){
         }
     },[user]);  // 만약 deps의 []로 한다면, 처음 마운트할때만 작동하고, 업데이트의 대해서는 관리되지 않음
 
-    const {name, email, id, active} = user;
+    const {username, email, id, active} = user;
     return(
         <div>
             <b style={{
                 color : active ? "red" : "black",
                 cursor : "pointer"
             }}
-            onClick={()=>onTrue(id)}>{name}</b><span>({email})</span><button onClick={()=>onRemove(id)}>삭제</button>  
+            onClick={()=>onTrue(id)}>{username}</b><span>({email})</span><button onClick={()=>onRemove(id)}>삭제</button>  
             &nbsp;
         </div>
     );
