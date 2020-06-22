@@ -1,7 +1,11 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useMemo, useCallback} from 'react';
 import Userlist from './Userlist';
 import CreateUser from './NewUser';
 
+function counterActiveUser(users){
+  console.log("액티브 유저 카운터중..");
+  return users.filter(user => user.active == true).length;
+}
 
 function App() {
 
@@ -38,39 +42,41 @@ function App() {
 let newusernumber = useRef(4);
  
 
-const onChange = (e)=>{
+const onChange = useCallback((e)=>{
   const {name, value} = e.target;
   setnewuser({
     ...newuser,
     id:newusernumber.current,  //current중요!
     [name]:value
   });
+}, [newuser]);
   
-};
 
-const onClick = ()=>{
+const onClick = useCallback(()=>{
   // setusers([...users,newuser]);    //배열추가하는 방법은 두가지중 하나 선택하여 사용하면됨.
-  setusers(users.concat(newuser));
+  setusers(users=>users.concat(newuser));
   setnewuser({
     name:'',
     email:'',
     active: false
   });
   newusernumber.current +=1; //current중요!
-};
+},[newuser]);
 
-const onRemove = (id)=>{
-  setusers(users.filter(n=> n.id !== id));
-};
+const onRemove = useCallback((id)=>{
+  setusers(users=>users.filter(n=> n.id !== id));
+},[]);
 
-const onTrue = (id)=>{
-  setusers(users.map( 
+const onTrue = useCallback((id)=>{
+  setusers(users=>users.map( 
   n => n.id == id 
   ? {...n , active: !n.active} 
   : n
   ));
   
-};
+},[]);
+
+const activeuserCount = useMemo(()=>counterActiveUser(users),[users]); //useMemo(함수 , deps) 로 이루어짐!.
 
 
 
@@ -78,6 +84,7 @@ const onTrue = (id)=>{
     <div>
       <CreateUser name={name} email={email} onChange={onChange} onClick={onClick}/>
       <Userlist users={users} onRemove={onRemove} onTrue={onTrue}/>
+      <div>활성화 유저수 : {activeuserCount}</div>
     </div>
 
   );

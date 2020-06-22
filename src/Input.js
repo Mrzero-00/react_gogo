@@ -1,4 +1,4 @@
-import React,{useState, useRef} from 'react';
+import React,{useState, useRef, useCallback} from 'react';
 
 
 // 리액트를 활용해서 DOM에 접근하고 싶을때 useRef를 활용함.
@@ -15,7 +15,7 @@ function Inputer(){
 
     const nameRef = useRef();
 
-    const onReset= ()=>{
+    const onReset= useCallback(()=>{
         settext(
             {
                 name:"",
@@ -23,8 +23,8 @@ function Inputer(){
             }
         );
         nameRef.current.focus();  // 리액트를 활용해서 DOM에 접근하고 싶을때 useRef를 활용함.
-    };
-    const onPaint= (e)=>{
+    },[nameRef]);
+    const onPaint= useCallback((e)=>{
         const {name, value} = e.target;
 
         settext({
@@ -32,7 +32,7 @@ function Inputer(){
             [name]:value,
         });
         
-    };
+    },[text]);
 
     return(
         <div style={{
@@ -46,4 +46,4 @@ function Inputer(){
     );
 }
 
-export default Inputer;
+export default React.memo(Inputer);
